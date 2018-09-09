@@ -23,8 +23,15 @@ module.exports = {
 
 
   routes : {
-    '/' : 'login'
-  }
+    '/': {
+      view: 'login'
+    },
+    '/landing': 'AuthenticateController.landing',
+    '/authenticate': 'AuthenticateController.authenticate'
+  },
+  clientId: '',
+  clientSecret: '',
+  redirectURI: 'http://localhost:1337',
   /**************************************************************************
   *                                                                         *
   * Tell Sails what database(s) it should use in production.                *
