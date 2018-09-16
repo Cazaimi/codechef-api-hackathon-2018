@@ -9,21 +9,21 @@ module.exports = {
 
   schema: true,
   attributes: {
-    userId: {
+    id: {
       type: 'number',
       unique: true,
       allowNull: false,
-      primaryKey: true
+      required: true
     },
     accessToken: {
       type: 'string',
-      size: 256,
-      unique: true
+      unique: true,
+      required: true
     },
     refreshToken: {
       type: 'string',
-      size: 256,
-      unique: true
+      unique: true,
+      required: true
     }
   }
 };

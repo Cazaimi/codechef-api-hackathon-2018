@@ -8,41 +8,42 @@
 module.exports = {
 
   schema: true,
-  autoPK: true,
   attributes: {
+    id: {
+      type: 'number',
+      unique: true,
+      required: true,
+      allowNull: false
+    },
     initiatingUserId: {
       type: 'number',
       allowNull: false
     },
     invitedMembers: {
       type: 'json',
-      allowNull: true,
       defaultsTo: {}
     },
     activeMembers: {
       type: 'json',
-      allowNull: true,
       defaultsTo: {}
     },
     active: {
       type: 'boolean',
-      required: true,
       defaultsTo: false
     },
     url: {
       type: 'string',
       required: true,
-      size: 256
+
     },
-    contestSettings = {
+    contestSettings: {
       type: 'json',
-      required: true,
       defaultsTo: {
         noOfProblems: 0,
         difficulty: 'easy',
         timeForEachProblem: 30,
         maximumMembers: 5,
-        
+
       }
     }
   },

@@ -7,8 +7,13 @@
 
 module.exports = {
 
-  autoPK: true,
   attributes: {
+    id: {
+      type: 'number',
+      unique: true,
+      required: true,
+      allowNull: false
+    },
     userId: {
       type: 'number',
       required: true,
