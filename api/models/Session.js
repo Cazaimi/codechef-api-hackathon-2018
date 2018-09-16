@@ -9,12 +9,7 @@ module.exports = {
 
   schema: true,
   attributes: {
-    id: {
-      type: 'number',
-      unique: true,
-      required: true,
-      allowNull: false
-    },
+
     initiatingUserId: {
       type: 'number',
       allowNull: false

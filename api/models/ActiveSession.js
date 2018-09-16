@@ -8,12 +8,6 @@
 module.exports = {
   schema: true,
   attributes: {
-    id: {
-      type: 'number',
-      unique: true,
-      required: true,
-      allowNull: false
-    },
     sessionId: {
       type: 'number',
       required: true,
