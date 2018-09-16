@@ -89,10 +89,8 @@ module.exports = {
         async function(userId, cb) {
           var err = await CacheService.set(userId, JSON.stringify(userData));
 
-          console.log('5');
           if (err) { console.log(err); }
 
-          console.log('6');
           return cb(null, userId);
         }
       ], function(err, userId) {
