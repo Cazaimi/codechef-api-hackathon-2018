@@ -9,12 +9,7 @@ module.exports = {
 
   schema: true,
   attributes: {
-    id: {
-      type: 'number',
-      unique: true,
-      allowNull: false,
-      required: true
-    },
+
     accessToken: {
       type: 'string',
       unique: true,
