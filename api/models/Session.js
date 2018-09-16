@@ -9,7 +9,10 @@ module.exports = {
 
   schema: true,
   attributes: {
-
+    displayName: {
+      type: 'string',
+      required: true
+    }
     initiatingUserId: {
       type: 'number',
       allowNull: false
