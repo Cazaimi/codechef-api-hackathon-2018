@@ -82,9 +82,22 @@ module.exports = {
           })
         },
         async function(userName, cb) {
-          var record = await User.create({ userName, accessToken, refreshToken }).fetch();
+          await sails
+            .getDatastore()
+            .transaction(async (db, proceed) => {
+              var record = await User
+                .findOne({ userName })
+                .usingConnection(db);
 
-          return cb(null, record.id);
+              if (!record) { 
+                record = await User
+                  .create({ userName, accessToken, refreshToken })
+                  .fetch()
+                  .usingConnection(db);
+              }
+              
+              return cb(null, record.id); 
+            });
         },
         async function(userId, cb) {
           var err = await CacheService.set(userId, JSON.stringify(userData));
