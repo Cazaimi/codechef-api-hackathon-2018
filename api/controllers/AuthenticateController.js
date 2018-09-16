@@ -38,7 +38,8 @@ module.exports = {
         }
       },
       accessToken,
-      refreshToken;
+      refreshToken,
+      userData;
 
     // @todo: Perform a state check (CSRF) here  
     // if()
@@ -62,13 +63,42 @@ module.exports = {
 
       async.waterfall([
         async function(cb) {
-          var record = await User.create({ accessToken, refreshToken }).fetch();
+          let getUserDetails = {
+            uri: 'https://api.codechef.com/users/me',
+            method: 'GET',
+            json: true,
+            headers: {
+              accept: 'application/json',
+              Authorization: `Bearer ${accessToken}`
+            }
+          };
 
-          return cb(null, record);
+          request(getUserDetails, async function(err, res, body) {
+            if (err) { return cb(err); }
+
+            userData = body;
+          
+            return cb(null, body.result.data.content.username);
+          })
+        },
+        async function(userName, cb) {
+          var record = await User.create({ userName, accessToken, refreshToken }).fetch();
+
+          return cb(null, record.id);
+        },
+        async function(userId, cb) {
+          var err = await CacheService.set(userId, JSON.stringify(userData));
+
+          console.log('5');
+          if (err) { console.log(err); }
+
+          console.log('6');
+          return cb(null, userId);
         }
-      ], function(err, results) {
-        console.log(results);
-        return res.redirect(`/home?userId=${results.id}`);
+      ], function(err, userId) {
+        if (err) { return res.serverError('Something went wrong. Please try again.') }
+
+        return res.redirect(`/home?userId=${userId}`);
       })
 
 

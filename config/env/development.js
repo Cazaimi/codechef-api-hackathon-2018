@@ -32,7 +32,7 @@ module.exports = {
   },
   clientId: '',
   clientSecret: '',
-  redirectURI: 'http://localhost:1337',
+  redirectURI: 'http://localhost:1337/landing',
   /**************************************************************************
   *                                                                         *
   * Tell Sails what database(s) it should use in production.                *
