@@ -27,7 +27,8 @@ module.exports = {
       view: 'login'
     },
     '/landing': 'AuthenticateController.landing',
-    '/authenticate': 'AuthenticateController.authenticate'
+    '/authenticate': 'AuthenticateController.authenticate',
+    '/home': 'UserController.home'
   },
   clientId: '',
   clientSecret: '',

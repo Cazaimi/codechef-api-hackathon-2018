@@ -19,10 +19,10 @@ module.exports = {
   },
 
   authenticate: function(req, res) {
-    res.redirect(`https://api.codechef.com/oauth/authorize?response_type=code&client_id=${sails.config.clientId}&redirect_uri=${sails.config.redirectURI}/landing&state=xyz`)
+    res.redirect(`https://api.codechef.com/oauth/authorize?response_type=code&client_id=${sails.config.clientId}&redirect_uri=${sails.config.redirectURI}&state=xyz`)
   },
 
-  landing: function(req, res) {
+  landing: async function(req, res) {
     let code = _.get(req, 'query.code'),
       state = _.get(req, 'query.state'),
       options = {
@@ -34,7 +34,7 @@ module.exports = {
           code: code,
           client_id: sails.config.clientId,
           client_secret: sails.config.clientSecret,
-          redirect_uri: `${sails.config.redirectURI}/landing`
+          redirect_uri: sails.config.redirectURI
         }
       },
       accessToken,
@@ -52,21 +52,27 @@ module.exports = {
         });
       },
       function(body, cb) {
-        /**{ status: 'OK',
-  result:
-   { data:
-      { access_token: 'aa72ffdc22a35f49289b568201edd2ccb24503de',
-        expires_in: 3600,
-        token_type: 'Bearer',
-        scope: 'public',
-        refresh_token: '33774915e69e251f0e083a3f62096d5f08ab40b2' } } } */
         accessToken = _.get(body, 'result.data.access_token');
         refreshToken = _.get(body, 'result.data.refresh_token');
 
-        return cb(null, {accessToken, refreshToken});
+        return cb(null, accessToken, refreshToken);
       }
-    ], function(err, results) {
-      return res.json({ results });
+    ], function(err, accessToken, refreshToken) {
+      if (err) { return res.serverError('Something went wrong. Please try again later.')}
+
+      async.waterfall([
+        async function(cb) {
+          var record = await User.create({ accessToken, refreshToken }).fetch();
+
+          return cb(null, record);
+        }
+      ], function(err, results) {
+        console.log(results);
+        return res.redirect(`/home?userId=${results.id}`);
+      })
+
+
+      
     });
   }
 };
