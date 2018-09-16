@@ -12,7 +12,7 @@ module.exports = {
     displayName: {
       type: 'string',
       required: true
-    }
+    },
     initiatingUserId: {
       type: 'number',
       allowNull: false
