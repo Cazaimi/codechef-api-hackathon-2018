@@ -47,6 +47,7 @@ DROP TABLE IF EXISTS `session`;
 
 CREATE TABLE `session` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `displayName` varchar(255) NOT NULL DEFAULT '',
   `initiatingUserId` int(11) unsigned NOT NULL,
   `invitedMembers` longtext,
   `activeMembers` longtext,
@@ -68,13 +69,15 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `userName` varchar(100) NOT NULL,
+  `roomInvites` longtext,
   `accessToken` varchar(100) NOT NULL DEFAULT '',
   `refreshToken` varchar(100) NOT NULL DEFAULT '',
   `createdAt` varchar(50) NOT NULL DEFAULT '0',
   `updatedAt` varchar(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `accessToken_unique` (`accessToken`),
-  UNIQUE KEY `refreshToken_unique` (`refreshToken`)
+  UNIQUE KEY `userName_unique` (`userName`),
+  UNIQUE KEY `accessToken_unique` (`accessToken`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

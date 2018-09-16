@@ -9,7 +9,11 @@ module.exports = {
 
   schema: true,
   attributes: {
-
+    userName: {
+      type: 'string',
+      unique: true,
+      required: true
+    },
     accessToken: {
       type: 'string',
       unique: true,
@@ -19,6 +23,9 @@ module.exports = {
       type: 'string',
       unique: true,
       required: true
+    },
+    roomInvites: {
+      type: json
     }
   }
 };
