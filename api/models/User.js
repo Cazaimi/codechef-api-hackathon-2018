@@ -25,7 +25,7 @@ module.exports = {
       required: true
     },
     roomInvites: {
-      type: json
+      type: 'json'
     }
   }
 };
